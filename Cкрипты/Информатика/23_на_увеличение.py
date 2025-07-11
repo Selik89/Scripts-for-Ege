@@ -23,7 +23,7 @@ while True:
             # -- Исходное число и результат
 
     start_num = random.randint(6, 15)
-    final_num = random.randint(start_num * 2 + 1, 50)
+    final_num = random.randint(start_num * 3 + 1, 50)
 
     # -- возможные команды
     possible_commands = ['Прибавить', 'Умножить на']
