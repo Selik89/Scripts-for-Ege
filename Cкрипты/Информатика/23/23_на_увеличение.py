@@ -38,16 +38,16 @@ while True:
 
         if cnt_of_command == 2 and commands.count(possible_commands[0]) == 1:
             break
-        elif cnt_of_command == 3 and final_num / start_num >= 3 and commands.count(possible_commands[1]) != 3:
+        elif cnt_of_command == 3 and final_num / start_num >= 3 and commands.count(possible_commands[1]) < 2:
             break
         elif cnt_of_command == 3 and commands.count(possible_commands[1]) < 2:
             break
 
 
     # -- подбор номеров для команд
-    numbers_for_plus  = [int(x) for x in range(2, 6)]
-    if int(final_num/start_num) + 1 >= 6:
-        numbers_for_multiplying = [int(x) for x in range(2, 6)]
+    numbers_for_plus  = [int(x) for x in range(2, 5)]
+    if int(final_num/start_num) + 1 >= 5:
+        numbers_for_multiplying = [int(x) for x in range(2, 5)]
     else:
         numbers_for_multiplying = [int(x) for x in range(2, int(final_num/start_num) + 1)]
 
@@ -103,11 +103,52 @@ while True:
 
     right_answer = solve_task(start_num, in_trajectory, out_trajectory, coms, cnt_of_command) * solve_task(in_trajectory, final_num, out_trajectory, coms, cnt_of_command)
 
-    if right_answer != 0:
+    if right_answer > 10:
         break
+
+if len(coms) == 2:
+    text_of_solve = f"""
+    Для решения задачи используем рекурсивную функцию, которая считает количество программ, переводящих одно число в другое, не проходя через запрещённое значение.
+    
+    Вот пример такой функции на Python:
+    
+def solve_task(x, y):
+    if x == {out_trajectory}:
+        return 0  # Если попали в запрещённое число — путь не подходит
+    elif x == y:
+        return 1  # Если дошли до нужного числа — это один из подходящих путей
+    elif x > y:
+        return 0  # Если превысили целевое число — путь не подходит
+    else:
+        return solve_task(x {coms[0]}, y) + solve_task(x {coms[1]}, y)
+        
+print(solve_task({start_num}, {in_trajectory}) * solve_task({in_trajectory}, {final_num}))
+"""
+
+else:
+    text_of_solve = f"""
+Для решения задачи используем рекурсивную функцию, которая считает количество программ, переводящих одно число в другое, не проходя через запрещённое значение.
+
+Вот пример такой функции на Python:
+
+def solve_task(x, y):
+    if x == {out_trajectory}:
+        return 0  # Если попали в запрещённое число — путь не подходит
+    elif x == y:
+        return 1  # Если дошли до нужного числа — это один из подходящих путей
+    elif x > y:
+        return 0  # Если превысили целевое число — путь не подходит
+    else:
+        return solve_task(x {coms[0]}, y) + solve_task(x {coms[1]}, y) + solve_task(x {coms[2]}, y)
+        
+print(solve_task({start_num}, {in_trajectory}) * solve_task({in_trajectory}, {final_num}))
+"""
+
 
 print(text)
 print("Answer = ", right_answer)
+print('__________________________')
+print(text_of_solve)
 
 
 
