@@ -1,12 +1,19 @@
-def solve_task(x, y):
-    if x == 9:
-        return 0  # Если попали в запрещённое число — путь не подходит
-    elif x == y:
-        return 1  # Если дошли до нужного числа — это один из подходящих путей
-    elif x > y:
-        return 0  # Если превысили целевое число — путь не подходит
+def f(s, n):
+    if s <= 74 and (n == 5 or n == 3):
+        return 1
+    elif s > 74 and n == 5:
+        return 0
+    elif s <= 74 and n < 5:
+        return 0
     else:
-        return solve_task(x + 4, y) + solve_task(x + 3, y) + solve_task(x * 4, y)
+        if n % 2 == 0:
+            return f(s - 3, n + 1) or f(s - 6, n + 1) or f(s // 2, n + 1)
+        else:
+            return f(s - 3, n + 1) and f(s - 6, n + 1) and f(s // 2, n + 1)
 
+results = []
+for s in range(75, 2000):
+    if f(s, 1):
+        results.append(s)
 
-print(solve_task(8, 15) * solve_task(15, 32))
+print(results)
