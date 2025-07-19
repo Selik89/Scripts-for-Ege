@@ -23,13 +23,13 @@ network_ip = random_network(f'/{mask_bits}').replace('/', ' ').split()[0]
 # строка маски для text
 mask = ipaddress.IPv4Network(f'0.0.0.0/{mask_bits}').netmask
 
-# подбор вопроса
-questions = [x for x in open('questions.txt')]
-question = random.choice(questions)[:-1]
+question = random.choice([
+    'Сколько в этой сети IP-адресов, для которых количество единиц в двоичной записи IP-адреса не кратно',
+    'Сколько в этой сети IP-адресов, для которых количество единиц в двоичной записи IP-адреса кратно'
+])
 
-if 'кратно' in question:
-    num = random.randint(3, 7)
-    question += ' ' + str(num) + '?'
+num = random.randint(3, 7)
+question += ' ' + str(num) + '?'
 
 text = f"""
 В терминологии сетей TCP/IP маской сети называют двоичное число, которое показывает, какая часть IP-адреса узла сети относится к адресу сети, а какая – к адресу узла в этой сети. 
@@ -40,44 +40,22 @@ text = f"""
 {question} 
 """.strip()
 
-print(text)
-
-
 # решение
-if question == questions[2][:-1]:
-    network = ipaddress.ip_network(f'{network_ip}/{mask}', 0)
-    right_answer = str(network[-2]).replace('.', '')
-elif 'кратно' in question:
-    network = ipaddress.ip_network(f'{network_ip}/{mask}', 0)
-    cnt = 0
-    for ip in network:
-        b = '0' * (32 - len(bin(int(ip))[2:])) + bin(int(ip))[2:]
-        if "не" in question:
-            if b.count('1') % num != 0:
-                cnt += 1
-        else:
-            if b.count('1') % num == 0:
-                cnt += 1
-    right_answer = cnt
-else:
-    network = ipaddress.ip_network(f'{network_ip}/{mask}', 0)
-    cnt = 0
-    for ip in network:
-        b = '0' * (32 - len(bin(int(ip))[2:])) + bin(int(ip))[2:]
-        if b[:16].count('1') >= b[16:].count('1'):
-            cnt += 1
-    right_answer = cnt
-
-# cоставляем код решения
-if question == questions[2][:-1]:
-    text_of_solve = f"""
-import ipaddress 
 network = ipaddress.ip_network(f'{network_ip}/{mask}', 0)
-right_answer = str(network[-2]).replace('.', '')
-"""
-elif 'кратно' in question:
-    if 'не' in question:
-        text_of_solve = f"""
+cnt = 0
+for ip in network:
+    b = '0' * (32 - len(bin(int(ip))[2:])) + bin(int(ip))[2:]
+    if "не" in question:
+        if b.count('1') % num != 0:
+            cnt += 1
+    else:
+        if b.count('1') % num == 0:
+            cnt += 1
+right_answer = cnt
+
+# текст решения
+if 'не' in question:
+    text_of_solve = f"""
 import ipaddress
 
 network = ipaddress.ip_network(f'{network_ip}/{mask}', 0)
@@ -88,8 +66,8 @@ for ip in network:
         cnt += 1
 print(cnt)
 """
-    else:
-        text_of_solve = f"""
+else:
+    text_of_solve = f"""
 import ipaddress
 
 network = ipaddress.ip_network(f'{network_ip}/{mask}', 0)
@@ -100,22 +78,7 @@ for ip in network:
         cnt += 1
 print(cnt)
 """
-else:
-    text_of_solve = f"""
-import ipaddress
 
-network = ipaddress.ip_network(f'{network_ip}/{mask}', 0)
-cnt = 0
-for ip in network:
-    b = '0' * (32 - len(bin(int(ip))[2:])) + bin(int(ip))[2:]
-    if b[:16].count('1') >= b[16:].count('1'):
-        cnt += 1
-print(cnt)
-    
-"""
-
-
-# выводы
 print(text)
 print(f'Answer = {right_answer}')
 print('___________________________')
