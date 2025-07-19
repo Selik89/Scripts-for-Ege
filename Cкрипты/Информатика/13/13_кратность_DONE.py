@@ -7,13 +7,10 @@ def random_network(mask):
         prefix = int(mask.strip('/'))
     else:
         prefix = ipaddress.IPv4Network(f'0.0.0.0/{mask}').prefixlen
-
     net_bits = prefix
     host_bits = 32 - net_bits
-
     net_int = random.getrandbits(net_bits) << host_bits
     network = ipaddress.IPv4Network((net_int, prefix))
-
     return str(network)
 
 # маска

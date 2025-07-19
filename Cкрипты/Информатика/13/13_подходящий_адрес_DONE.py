@@ -13,7 +13,6 @@ def random_network(mask):
 
     net_int = random.getrandbits(net_bits) << host_bits
     network = ipaddress.IPv4Network((net_int, prefix))
-
     return str(network)
 
 # маска
