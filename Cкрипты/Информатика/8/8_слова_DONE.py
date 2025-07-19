@@ -75,7 +75,7 @@ def solve(
             else:
                 second_condition_check = (letter_for_second_condition not in p)
 
-        # Если все условия выполняются
+        # Если все 1 условия выполняются
         if even_odd_check and first_condition_check and second_condition_check:
             k += 1
             last = num
@@ -125,7 +125,7 @@ while True:
         break
 
 
-# подбор условия для второго условия
+# подбор 1 условия для второго 1 условия
 if second_condition == "содержит" or second_condition == "содержат":
     flag = True
     condition_for_second_condition = random.choice(['ровно', 'не менее', 'не более'])
@@ -139,7 +139,7 @@ if second_condition == "содержит" or second_condition == "содержа
 
 
 # подбор букв для условий
-# -- 1 условие
+# -- 1 условие.txt
 
 if random.randint(1, 2) == 2:
     while True:
@@ -174,7 +174,7 @@ for p in itertools.product(sorted(word), repeat = dict[length]):
     string_for_dict += '\n'
     i += 1
 
-# текст условия
+# текст 1 условия
 text = f"""
 Все {length} слова, составленные из букв {letters_in_word} записаны в алфавитном порядке и пронумерованы.
 Вот начало списка:
@@ -189,13 +189,13 @@ result = solve(
     length, word, first_condition
 )
 
-# Формируем строку с буквами для первого условия
+# Формируем строку с буквами для первого 1 условия
 if len(letters_for_first_condition) == 1:
     first_condition_text = f"начинается на букву '{letters_for_first_condition[0]}'"
 else:
     first_condition_text = f"начинается на букву '{letters_for_first_condition[0]}' или '{letters_for_first_condition[1]}'"
 
-# Формируем строку для второго условия
+# Формируем строку для второго 1 условия
 if 'содержит' in second_condition:
     parts = second_condition.split()
     if len(parts) == 3:

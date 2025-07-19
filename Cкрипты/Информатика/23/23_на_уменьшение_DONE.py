@@ -61,7 +61,7 @@ while True:
             commands[i] = commands[i] + f' {n}'
             numbers_for_division.remove(n)
 
-    # -- строчки для условия
+    # -- строчки для 1 условия
 
     alphabet = 'ABC'
     string_of_commands = ''
