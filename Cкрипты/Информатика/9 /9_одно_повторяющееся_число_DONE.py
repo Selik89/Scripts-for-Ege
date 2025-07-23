@@ -23,23 +23,28 @@ second_condition = random.choice(second_conditions)
 
 text = f"""
 Откройте файл электронной таблицы, содержащей в каждой строке шесть натуральных чисел. 
-Определите наибольший номер строки таблицы, для чисел которой выполнены оба условия:
-
+Определите количество строк таблицы, для чисел которых выполнены оба условия:
 {first_condition_str}
 {second_condition}.
-
 В ответе запишите только число.
 """.strip()
 
 count_of_right_strings = 0
 
+tf_main = random.randint(1, 3)
 
 # generator
 wb = Workbook()
 ws = wb.active
 
 for _ in range(5000):
-    tf = random.choice([True, False, False, False])
+    if tf_main == 1:
+        tf = random.choice([True, False, False, False])
+    elif tf_main == 2:
+        tf = random.choice([True, False, False])
+    else:
+        tf = random.choice([True, True, False, False, False, False, False])
+
     while True:
         if tf:
             repeat_num = random.randint(10, 99)
@@ -56,7 +61,7 @@ for _ in range(5000):
                     array) + min(array) < sum(array) - max(array) - min(array):
                 check = True
             elif second_condition == '- удвоенная сумма наибольшего и наименьшего чисел больше суммы четырёх других' and 2 * (
-                    max(array) + min(array)) < sum(array) - max(array) - min(array):
+                    max(array) + min(array)) > sum(array) - max(array) - min(array):
                 check = True
             elif second_condition == '- повторяющееся число строки больше, чем среднее арифметическое её неповторяющихся чисел' and repeat_num > (
                     sum(array) - repeat_num * first_condition_int[1]) / (6 - first_condition_int[1]):
@@ -77,7 +82,6 @@ for _ in range(5000):
                 count_of_right_strings += 1
                 ws.append(array)
                 break
-
         else:
             array = []
             choice = random.choice([True, False])
