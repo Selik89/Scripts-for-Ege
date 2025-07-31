@@ -30,13 +30,10 @@ for i in range(1000):
         string += ''.join(random.choices(alphabet, k=length))
     else:
         length = random.randint(500, 3000)
-        string += ''.join(random.choices('QWERTYUIOPLKJHGFDSAZXCVBNM'[system - 10:], k=length))
-
-
-
+        string += ''.join(random.choices('9845QWERTYUIOPLKJHGFDSAZXCVBNM'[system - 10:], k=length))
 
 file.write(string)
-print(string)
+
 
 # solve
 reg_for_ordinary = rf'([{alphabet[1:]}][{alphabet}]*)'
@@ -48,8 +45,15 @@ array_for_even = sorted([x.group() for x in re.finditer(reg_for_even, string)], 
 reg_for_odd = rf'([{alphabet[1:]}][{alphabet}]*[{alphabet_odd}])'
 array_for_odd = sorted([x.group() for x in re.finditer(reg_for_odd, string)], key = len)
 
-
-
+if extra_condition == 'чётного':
+    right_answer = len(array_for_even[-1])
+    check = len(array_for_even[-2])
+elif extra_condition == 'нечётного':
+    right_answer = len(array_for_odd[-1])
+    check = len(array_for_odd[-2])
+else:
+    right_answer = len(array_for_ordinary[-1])
+    check = len(array_for_ordinary[-2])
 
 text = f"""
 Текстовый файл состоит из десятичных цифр и заглавных букв латинского алфавита. 
@@ -57,6 +61,15 @@ text = f"""
 В ответе запишите количество символов (значащих цифр в записи числа) в этой последовательности.
 Примечание. Латинские буквы {string_of_latins_in_system} означают цифры из алфавита {system}-ричной системы счисления.
 """.strip()
+
+if check == right_answer:
+    print('ПЕРЕЗАПУСТИТЬ!')
+    print('РЕДКАЯ ОШИБКА')
+else:
+    print(text)
+    print(right_answer)
+
+
 
 
 
