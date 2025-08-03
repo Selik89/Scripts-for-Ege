@@ -39,11 +39,14 @@ file.write(string)
 reg_for_ordinary = rf'([{alphabet[1:]}][{alphabet}]*)'
 array_for_ordinary = sorted([x.group() for x in re.finditer(reg_for_ordinary, string)], key = len)
 
+
 reg_for_even = rf'([{alphabet[1:]}][{alphabet}]*[{alphabet_even}])'
 array_for_even = sorted([x.group() for x in re.finditer(reg_for_even, string)], key = len)
 
+
 reg_for_odd = rf'([{alphabet[1:]}][{alphabet}]*[{alphabet_odd}])'
 array_for_odd = sorted([x.group() for x in re.finditer(reg_for_odd, string)], key = len)
+
 
 if extra_condition == 'чётного':
     right_answer = len(array_for_even[-1])
@@ -54,6 +57,7 @@ elif extra_condition == 'нечётного':
 else:
     right_answer = len(array_for_ordinary[-1])
     check = len(array_for_ordinary[-2])
+
 
 text = f"""
 Текстовый файл состоит из десятичных цифр и заглавных букв латинского алфавита. 
